@@ -1,4 +1,6 @@
-# Experiments ( 🔬 코드 실험실 )
+# Rhiesearch 
+
+> 🔬 RHIE-coder 기술 연구실
 
 ## 🧱 구조
 
@@ -8,6 +10,10 @@
 └── journals ➡️ [ 📚 기술 연구 기록소 ]
 ```
 
-## Prerequisite
+## 🏃 코드 실행 준비 사항
 
-[Rockury CLI](https://github.com/RHIE-coder/Rockury)
+```sh
+git submodule update --init --recursive
+cd ./rockury
+./install.sh
+```
