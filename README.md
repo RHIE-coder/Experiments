@@ -11,12 +11,12 @@
 │   ├── information   / ➡ [ 🚀 / 정보 수집 ]
 │   └── review        / ➡ [ 🚀 / 활용 리뷰 ]
 ├── knowledge         ➡️ [ 📚 기술 탐구 기록 ]
-│   ├── environments  / ➡ [ 📚 / cs, algorithm, ... ]
-│   ├── externals     / ➡ [ 📚 / IEEE, RFC, ...]
-│   ├── fundamentals  / ➡ [ 📚 / infra, installation, ...]
+│   ├── fundamentals  / ➡ [ 📚 / cs, algorithm, ... ]
+│   ├── standards     / ➡ [ 📚 / IEEE, RFC, ...]
+│   ├── environments  / ➡ [ 📚 / infra, installation, ...]
 │   ├── languages     / ➡ [ 📚 / java, python, ...]
-│   ├── platforms     / ➡ [ 📚 / libraries, frameworks, ...]
-│   └── standards     / ➡ [ 📚 / AWS, Third-Party API, ...]
+│   ├── externals     / ➡ [ 📚 / libraries, frameworks, ...]
+│   └── platforms     / ➡ [ 📚 / AWS, Third-Party API, ...]
 └── sandbox           ➡️ [ 🏗️ 기술 실험 공간 ]
 ```
 

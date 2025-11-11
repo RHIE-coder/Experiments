@@ -1,15 +1,16 @@
 ---
-slug: /
+slug: About Knowledge
+sidebar_position: 1
 ---
 
-# /
+# About Knowledge
 
 ```
 .
-├── environments  ➡ [ 📚 / cs, algorithm, ... ]
-├── externals     ➡ [ 📚 / IEEE, RFC, ...]
-├── fundamentals  ➡ [ 📚 / infra, installation, ...]
+├── fundamentals  ➡ [ 📚 / cs, algorithm, ... ]
+├── standards     ➡ [ 📚 / IEEE, RFC, ...]
+├── environments  ➡ [ 📚 / infra, installation, ...]
 ├── languages     ➡ [ 📚 / java, python, ...]
-├── platforms     ➡ [ 📚 / libraries, frameworks, ...]
-└── standards     ➡ [ 📚 / AWS, Third-Party API, ...]
+├── externals     ➡ [ 📚 / libraries, frameworks, ...]
+└── platforms     ➡ [ 📚 / AWS, Third-Party API, ...]
 ```

@@ -1,0 +1,8 @@
+{
+  "label": "Platforms",
+  "position": 6,
+  "link": {
+    "type": "generated-index",
+    "description": "구체적 서비스나 벤더 종속 플랫폼(AWS, Supabase, PostgreSQL, MySQL, Oracle, Redis, Kafka 등)"
+  }
+}

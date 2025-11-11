@@ -1,0 +1,8 @@
+{
+  "label": "Environments",
+  "position": 2,
+  "link": {
+    "type": "generated-index",
+    "description": "설치·환경 구성 / 인프라 설정(OS, Docker, Linux 네트워크 설정, Nginx 설정, Ansible Playbook, Infra-as-Code)"
+  }
+}
