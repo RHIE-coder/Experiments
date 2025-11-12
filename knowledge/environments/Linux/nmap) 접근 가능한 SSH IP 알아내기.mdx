@@ -1,0 +1,49 @@
+# [nmap] 접근 가능한 SSH IP 알아내기 
+
+## 특정 네트워크 영역안에 SSH 접근 가능한 열려있는 IP 주소 알아내는 방법
+
+```sh
+sudo nmap -sS -p 22 192.168.64.0/24
+```
+
+ - 출력결과
+
+```
+Starting Nmap 7.95 ( https://nmap.org ) at 2025-11-12 23:09 KST
+Nmap scan report for 192.168.64.7
+Host is up (0.0031s latency).
+
+PORT   STATE SERVICE
+22/tcp open  ssh
+MAC Address: 6A:20:84:F1:04:80 (Unknown)
+
+Nmap scan report for 192.168.64.1
+Host is up (0.000082s latency).
+
+PORT   STATE  SERVICE
+22/tcp closed ssh
+
+Nmap done: 256 IP addresses (2 hosts up) scanned in 1.98 seconds
+```
+
+:::tip `-sS` 옵션
+
+`-sS` 는 SYN 스캔입니다.
+
+### 동작 원리(요약):
+ 1. 스캐너가 대상 포트에 SYN 패킷을 보냅니다.
+ 2. 응답이 SYN/ACK 이면 → 포트가 open (서비스가 리슨 중).
+ 3. 응답이 RST 이면 → 포트가 closed.
+ 4. 응답이 전혀 없거나 ICMP로 거부되면 → filtered(방화벽 등으로 차단).
+
+스캐너는 포트를 완전히 열지 않기 위해 RST를 다시 보내 연결을 끝냅니다(즉, 3-way handshake를 완료하지 않음) — 그래서 “half-open” 또는 “stealth”라 부릅니다.
+
+#### - 장점
+ - 매우 빠르고(연결 완전성 검사 대신 SYN/ACK만 확인) 많은 포트를/호스트를 효율적으로 스캔.
+ - 일부 IDS/로그에서 완전한 연결보다 덜 눈에 띌 수 있음(완전한 은닉성 보장하지는 않음).
+
+#### - 단점/주의
+ - 루트 권한이 필요합니다 (sudo 사용).
+ - 일부 네트워크/보안 장비에선 SYN 스캔 자체가 탐지/차단될 수 있음.
+ - 법적·윤리적 문제: 소유자 허가 없는 스캔은 피해야 합니다.
+:::

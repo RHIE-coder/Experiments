@@ -1,0 +1,38 @@
+# pkg로 설치한 명령어 지우기
+
+## Golang
+
+::::note
+**의문** 
+ - `~/.zshrc`나 `~/.bash_profile` 어디에도 관련 환경 변수가 없는데 어떻게 `go` 명령어를 사용할 수 있을까
+
+:::info
+**해답**
+공식 Go 설치 패키지(go1.xx.x.darwin-amd64.pkg 또는 go1.xx.x.darwin-arm64.pkg)는
+사용자 환경이 아니라 시스템 전역 설정 파일을 수정합니다.
+설치 과정에서 실제로 수행되는 일은 다음과 같습니다:
+ - Go 본체: `/usr/local/go` (Go 실행 파일 및 표준 라이브러리)
+ - PATH 등록용 파일: `/etc/paths.d/go` (/usr/local/go/bin을 PATH에 추가)
+:::
+::::
+
+```sh
+sudo rm -rf /usr/local/go
+sudo rm -f /etc/paths.d/go
+```
+
+### (선택) Go 워크스페이스 / 캐시 정리
+ - 기본 workspace (go install / go get 결과)
+```sh
+rm -rf ~/go
+```
+
+ - 빌드 캐시
+```sh
+rm -rf ~/Library/Caches/go-build
+```
+ - 추가 설정 (있을 수도, 없을 수도) 
+   - telmetry 발견 Go 도구 사용 통계를 익명으로 수집하는 기능
+```sh
+rm -rf ~/Library/Application\ Support/go
+```

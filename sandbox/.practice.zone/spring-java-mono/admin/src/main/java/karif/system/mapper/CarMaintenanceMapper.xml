@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="karif.system.mapper.CarMaintenanceMapper">
+
+    <select id="findCarMaintenanceInfo" parameterType="map" resultType="karif.system.dto.CarMaintenanceInfo">
+        SELECT 
+            cm_pre.biz_nm AS 사업장명,
+            cm.assoc_nm AS 소속조합,
+            sr.start_at AS 시작시간,
+            sr.end_at AS 종료시간,
+            sr.range_data_stat AS 자료상태,
+            f.sen_code AS 측정항목코드
+        FROM 
+            tbl_member AS m
+        JOIN 
+            tbl_car_maintenance AS cm ON m.username = cm.username
+        JOIN 
+            tbl_car_maintenance_infolink AS cmi ON cm.username = cmi.username
+        JOIN 
+            tbl_car_maintenance_pre AS cm_pre ON cmi.biz_site_code = cm_pre.biz_site_code
+        JOIN 
+            tbl_chimney AS chim ON cm_pre.biz_site_code = chim.biz_site_code
+        JOIN 
+            tbl_facility_group AS fg ON chim.id = fg.chim_id
+        JOIN 
+            tbl_facility AS f ON fg.id = f.fac_group_id
+        JOIN 
+            tbl_iot_sensor_data_status_range AS sr ON f.id = sr.fac_id
+        WHERE 
+            m.rolename = 'CAR_MAINT'
+            <if test="assocNm != null">
+                AND cm.assoc_nm = #{assocNm}
+            </if>
+            AND sr.start_at >= #{startAt}
+            AND sr.end_at <= #{endAt}
+        ORDER BY 
+            sr.start_at;
+    </select>
+</mapper>

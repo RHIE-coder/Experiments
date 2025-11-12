@@ -1,0 +1,30 @@
+# brew 패키지 업그레이드
+
+
+> node@20 -> node@24
+
+```sh title="1. 최신버전 설치" 
+brew install node@24
+```
+
+```sh title="2. 설치 버전들 조회"
+brew list | grep node
+
+--- output ---
+node@20
+node@24
+--------------
+```
+
+```sh title="3. ~/.zshrc"
+export PATH="/opt/homebrew/opt/node@24/bin:$PATH"    
+```
+
+```sh title="4. 이전버전 삭제"
+brew uninstall node@20
+```
+
+```sh title="5. 환경변수 최신화 후 확인"
+. ~/.zshrc
+node --version
+```

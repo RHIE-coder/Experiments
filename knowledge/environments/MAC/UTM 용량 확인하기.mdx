@@ -1,0 +1,19 @@
+# UTM 용량 확인하기
+
+```sh title="전체 UTM 데이터 사용량 보기"
+du -sh ~/Library/Containers/com.utmapp.UTM/Data/Documents
+```
+
+```sh title="개별 VM별 용량 보기"
+du -sh ~/Library/Containers/com.utmapp.UTM/Data/Documents/*.utm
+```
+
+> ```
+> 출력 예시:
+>
+> 23G    ubuntu.utm
+> 45G    windows11.utm
+> 2.1G   alpine.utm
+> ````
+
+👉 이렇게 하면 각 VM이 차지하는 실제 디스크 사용량을 바로 볼 수 있습니다.
