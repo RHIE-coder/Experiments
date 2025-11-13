@@ -1,0 +1,66 @@
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Tailwind 활용법
+
+## 너무 긴 ClassName 다루기
+
+:::info "cn, clsx, twMerge, cva"
+<Tabs>
+    <TabItem value="3" label="clsx">
+### 🎯 1) clsx — 조건부 class 조합기 (기본)
+```tsx
+const isColorfulText = true
+
+const clsxStyle = clsx("p-2", isColorfulText && "text-red-500", [
+    "text-xs",
+    isColorfulText && "bg-cyan-500",
+]);
+// p-2 text-red-500 text-xs bg-cyan-500
+```
+    </TabItem>
+    <TabItem value="2" label="twMerge">
+### 🎯 2) twMerge — Tailwind class 충돌 자동 정리기
+```tsx
+twMerge("p-2 p-4")         // -> "p-4"
+twMerge("text-sm text-lg") // -> "text-lg"
+```
+    </TabItem>
+    <TabItem value="4" label="cva">
+### 🎯 3) cva — Variant 기반 class 생성기 (UI 컴포넌트 스타일 시스템)
+```tsx
+const cvaStyle = cva(
+    "px-4 py-2 rounded",
+    {
+        variants: {
+            intent: {
+                primary: "bg-blue-500",
+                secondary: "bg-red-500",
+            },
+            size: {
+                sm: "text-sm",
+                lg: "text-lg",
+            },
+        },
+        defaultVariants: {
+            intent: "primary",
+            size: "sm"
+        }
+    }
+)
+// px-4 py-2 rounded bg-blue-500 text-sm
+```
+    </TabItem>
+    <TabItem value="1" label="cn">
+### 🎯 4) cn — “개발자가 만든 편의 함수” (clsx + twMerge 결합)
+```tsx
+import { clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
+```
+    </TabItem>
+</Tabs>
+:::

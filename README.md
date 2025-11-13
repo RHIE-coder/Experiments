@@ -19,11 +19,3 @@
 │   └── platforms     / ➡ [ 📚 / AWS, Third-Party API, ...]
 └── sandbox           ➡️ [ 🏗️ 기술 실험 공간 ]
 ```
-
-## 🏃 코드 실행 준비 사항
-
-```sh
-git submodule update --init --recursive
-cd ./rockury
-./install.sh
-```

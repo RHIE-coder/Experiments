@@ -1,0 +1,48 @@
+@use 'btn';
+@use 'base';
+
+.message {
+  @extend %message-shared;
+}
+
+.error {
+  @extend %message-shared;
+  border-color: red;
+}
+
+.warning {
+  @extend %message-shared;
+  border-color: yellow;
+}
+
+@mixin my-theme($theme-arg: rgb(0, 134, 139)) {
+  background: $theme-arg;
+  box-shadow: 0 0 1px rgba($theme-arg, .25);
+  color: #fff;
+}
+
+.info {
+  @include my-theme;
+}
+.alert {
+  @include my-theme($theme-arg: DarkRed);
+}
+.success {
+  @include my-theme($theme-arg: DarkGreen);
+}
+
+$blue-color: #2820cb;
+$green-color: #21d324;
+
+.card {
+  background: rgb(221, 225, 124);
+  padding: 1rem;
+
+  .title {
+    color: $blue-color;
+  }
+
+  .text {
+    color: $green-color;
+  }
+}

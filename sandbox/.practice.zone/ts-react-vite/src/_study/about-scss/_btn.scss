@@ -1,0 +1,32 @@
+@use 'box/colorful';
+
+.button {
+  border: none;
+  border-radius: 6px;
+  padding: 0.6rem 1.2rem;
+  cursor: pointer;
+  color: white;
+  font-weight: 600;
+  transition: 0.2s ease;
+
+  &--primary {
+    background-color: colorful.$primary;
+    &:hover {
+      background-color: darken(colorful.$primary, 10%);
+    }
+  }
+
+  &--secondary {
+    background-color: colorful.$secondary;
+    &:hover {
+      background-color: darken(colorful.$secondary, 10%);
+    }
+  }
+
+  &--danger {
+    background-color: colorful.$danger;
+    &:hover {
+      background-color: darken(colorful.$danger, 10%);
+    }
+  }
+}

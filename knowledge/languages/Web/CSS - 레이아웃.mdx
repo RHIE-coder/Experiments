@@ -1,0 +1,83 @@
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# CSS - 레이아웃
+
+## Flex 
+
+```css
+display: flex;
+```
+
+<Tabs>
+<TabItem value="1" label="flex-direction">
+주축(main axis)의 방향을 결정합니다.
+ - `row`: left -> right (default)
+ - `row-reverse`: right -> left
+ - `column`: top -> bottom
+ - `column-reverse`: bottom -> top
+</TabItem>
+<TabItem value="2" label="flex-wrap">
+아이템이 컨테이너를 넘어가면 줄바꿈 여부 결정.
+ - `nowrap`: 줄바꿈 안 함 (default)
+ - `wrap`: 다음 줄로 넘어감
+ - `wrap-reverse`: 줄바꿈 + 순서 반대
+</TabItem>
+<TabItem value="3" label="flex-flow">
+flex-direction + flex-wrap을 한번에 결정하는 shorthand.
+```css
+flex-flow: row wrap;
+```
+</TabItem>
+<TabItem value="4" label="flex-basis">
+ - 아이템의 기본 크기(width/height보다 우선 적용됨.)
+ - auto면 콘텐츠 크기 기준. 0이면 균등 분배용.
+</TabItem>
+<TabItem value="5" label="flex-grow">
+ - 여유 공간이 있을 때 얼마나 커질지 비율로 정의
+    - `flex-grow: 1` -> 동일한 비율로 커짐
+    - `flex-grow: 2` -> 다른 아이템보다 2배 더 커짐
+</TabItem>
+<TabItem value="6" label="flex-shrink">
+ - 공간이 부족할 때 얼마나 줄어들지 비율로 정의.
+    - `flex-shrink: 0` -> 줄어들지 않음 (고정 크기 유지)
+    - `flex-shrink: 2` -> 더 많이 줄어듦
+</TabItem>
+<TabItem value="7" label="flex">
+```css
+flex: 1 1 200px;
+/* grow=1, shrink=1, basis=200px */
+```
+</TabItem>
+</Tabs>
+
+<br/>
+
+### - Flex 크기 비율 조절하기
+
+<Tabs>
+<TabItem value="1" label="justify-content">
+주축(main axis) 방향의 정렬 방식.
+ - `flex-start`
+ - `flex-end`
+ - `center`
+ - `space-between`: 양 끝 맞추고 중간 균등 간격
+ - `space-around`: 모든 아이템 주변에 균등 간격
+ - `space-evenly`: 아이템 간, 양쪽 모두 동일 간격
+</TabItem>
+<TabItem value="2" label="align-items">
+교차축(cross axis) 방향의 정렬
+ - `stretch`: 자동 늘림(default)
+ - `flex-start`: 위쪽 정렬
+ - `flex-end`: 아래쪽 정렬
+ - `center`
+ - `baseline`: 텍스트 기준선 맞춤
+</TabItem>
+<TabItem value="3" label="align-content">
+여러 줄(wrap된 줄) 간의 정렬
+ - `flex-wrap: wrap`일 때만 의미가 있음
+ - `flex-start`, `flex-end`, `center`
+ - `space-between`, `space-around`, `stretch`
+</TabItem>
+
+</Tabs>

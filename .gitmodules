@@ -1,7 +1,3 @@
-[submodule "rockury"]
-	path = .rockury
-	url = https://github.com/rhie-coder/rockury
-
 [submodule "builder"]
 	path = .builder
 	url = https://github.com/rhie-coder/builder

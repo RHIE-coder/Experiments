@@ -1,0 +1,142 @@
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# SCSS 활용법
+
+## Variables & Nesting
+
+<Tabs>
+  <TabItem value="1" label="index.module.scss" default>
+```css title="index.module.scss"
+$blue-color: #2820cb;
+$green-color: #21d324;
+
+.card {
+  background: rgb(221, 225, 124);
+  padding: 1rem;
+
+  .title {
+    color: $blue-color;
+  }
+
+  .text {
+    color: $green-color;
+  }
+}
+```
+  </TabItem>
+  <TabItem value="2" label="index.tsx">
+```tsx title="index.tsx"
+import styles from "./index.module.scss"
+
+export default function Index() {
+  return (
+    <div className={styles.card}>
+      <h2 className={styles.title}>SCSS Module 실습</h2>
+      <p className={styles.text}>Nesting</p>
+    </div>
+  );
+}
+```
+  </TabItem>
+</Tabs>
+
+## Partials & Modules
+
+<Tabs>
+<TabItem value="1" label="index.module.scss" default>
+```css title="index.module.scss"
+@mixin my-theme($theme-arg: rgb(0, 134, 139)) {
+  background: $theme-arg;
+  box-shadow: 0 0 1px rgba($theme-arg, .25);
+  color: #fff;
+}
+
+.info {
+  @include my-theme;
+}
+.alert {
+  @include my-theme($theme-arg: DarkRed);
+}
+.success {
+  @include my-theme($theme-arg: DarkGreen);
+}
+```
+</TabItem>
+<TabItem value="2" label="index.tsx">
+```tsx title="index.tsx"
+import styles from "./index.module.scss"
+
+export default function Index() {
+    const btnStyle = `${styles.button} ${styles[`button--primary`]}`;
+
+    return (
+        <>
+            <div className={styles.info}>INFO</div>
+            <div className={styles.alert}>SUCCESS</div>
+            <div className={styles.success}>ALERT</div>
+        </>
+    );
+}
+```
+</TabItem>
+</Tabs>
+
+## Extend & Inheritance
+
+<Tabs>
+  <TabItem value="1" label="_base.scss" default>
+```css title="_base.scss"
+/* This CSS will print because %message-shared is extended. */
+%message-shared {
+  border: 1px solid #ccc;
+  padding: 10px;
+  color: #333;
+}
+
+// This CSS won't print because %equal-heights is never extended.
+%equal-heights {
+  display: flex;
+  flex-wrap: wrap;
+}
+```
+  </TabItem>
+  <TabItem value="2" label="index.module.scss">
+```css title="index.module.scss"
+@use 'base';
+
+.message {
+  @extend %message-shared;
+}
+
+.error {
+  @extend %message-shared;
+  border-color: red;
+}
+
+.warning {
+  @extend %message-shared;
+  border-color: yellow;
+}
+```
+  </TabItem>
+  <TabItem value="3" label="index.tsx">
+```tsx title="index.tsx"
+import styles from "./index.module.scss"
+
+export default function Index() {
+
+  return (
+    <>
+      <div className={styles.message}>Message 스타일 체크</div>
+      <div className={styles.error}>Error 스타일 체크</div>
+      <div className={styles.warning}>Warning 스타일 체크</div>
+    </>
+  );
+}
+```
+
+  </TabItem>
+</Tabs>
+

@@ -1,0 +1,16 @@
+# Submodule 다루기
+
+## Submodule 삭제하기
+
+1. submodule 등록 해제
+
+```sh
+git submodule deinit -f modules/my-submodule
+rm -rf modules/my-submodule
+```
+
+2. .gitmodule 에서 항목제거
+
+```sh
+sed -i '' 'modules/my-submodule/,+2d' .gitmodule
+```
