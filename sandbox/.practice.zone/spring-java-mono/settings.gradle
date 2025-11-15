@@ -11,5 +11,5 @@ plugins {
 }
 
 rootProject.name = 'application'
-include('command')
-include('admin')
+include('cmd')
+include('web')

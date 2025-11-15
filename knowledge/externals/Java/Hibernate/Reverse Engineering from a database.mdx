@@ -1,0 +1,28 @@
+# Reverse Engineering from a database
+
+```sh title="hibernate.properties"
+hibernate.connection.driver_class=org.h2.Driver
+hibernate.connection.url=jdbc:h2:tcp://localhost/./sakila
+hibernate.connection.username=sa
+hibernate.default_catalog=SAKILA
+hibernate.default_schema=PUBLIC
+```
+
+```groovy title="build.gradle"
+plugins {
+    id('application')
+    id('org.hibernate.tool.hibernate-tools-gradle') version '7.1.7.Final'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation('com.h2database:h2:2.3.232')
+}
+```
+
+```sh title="run in shell"
+gradle generateJava
+```

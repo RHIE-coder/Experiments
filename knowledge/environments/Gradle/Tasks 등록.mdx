@@ -1,0 +1,25 @@
+# Tasks 등록
+
+## 주요 메서드
+
+ - `tasks.register` : Task 생성(create), 새로운 Task를 만들 때 사용함
+ - `tasks.named` : 기존 Task 참조(reference), 이미 존재는 Task를 수정할 때
+
+## 여러 실행 Task 자동 생성하기
+
+```groovy
+/* ======================================================
+   🔥 여러 실행 Task를 자동으로 생성하기 위한 헬퍼 함수
+   ====================================================== */
+def registerRunProgram = { String name, String className ->
+    tasks.register("cmd_${name}", JavaExec) {
+        group = "Run Yours Command"          // gradle tasks --group run-programs 로 확인 가능
+        description = "Run program: ${className}"
+
+        classpath = sourceSets.main.runtimeClasspath
+        mainClass = className
+    }
+}
+
+registerRunProgram("demo",  "com.example.Demo")
+```

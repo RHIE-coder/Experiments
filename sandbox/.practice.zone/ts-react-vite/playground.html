@@ -5,7 +5,93 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Playground</title>
 </head>
+<style>
+  body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #f7f7f7;
+    height: 100vh;
+    margin: 0;
+    font-family: sans-serif;
+  }
+
+  h2 {
+    margin: 20px;
+  }
+
+  canvas {
+    border: 2px solid #333;
+    background: white;
+    cursor: crosshair;
+  }
+
+  .toolbar {
+    margin-bottom: 10px;
+  }
+
+  input[type=color] {
+    width: 40px;
+    height: 30px;
+    border: none;
+  }
+</style>
+</head>
 <body>
-    
+
+<h2>🖌️ Canvas Drawing Example</h2>
+<div class="toolbar">
+  색상: <input type="color" id="color" value="#1e88e5">
+  두께: <input type="range" id="size" min="1" max="20" value="3">
+  <button id="clear">지우기</button>
+</div>
+
+<canvas id="draw" width="600" height="400"></canvas>
+
+<script>
+const canvas = document.getElementById("draw");
+const ctx = canvas.getContext("2d");
+
+let drawing = false; // 현재 마우스를 누르고 있는지
+let prevX = 0, prevY = 0;
+
+// 스타일 초기화
+ctx.lineCap = "round"; // 끝 모양 둥글게
+ctx.lineJoin = "round"; // 선 연결 둥글게
+
+// 마우스 눌렀을 때
+canvas.addEventListener("mousedown", e => {
+  drawing = true;
+  [prevX, prevY] = [e.offsetX, e.offsetY];
+});
+
+// 마우스 움직일 때
+canvas.addEventListener("mousemove", e => {
+  if (!drawing) return;
+
+  const color = document.getElementById("color").value;
+  const size = document.getElementById("size").value;
+
+  ctx.strokeStyle = color;
+  ctx.lineWidth = size;
+
+  ctx.beginPath();
+  ctx.moveTo(prevX, prevY);
+  ctx.lineTo(e.offsetX, e.offsetY);
+  ctx.stroke();
+
+  [prevX, prevY] = [e.offsetX, e.offsetY];
+});
+
+// 마우스 뗐을 때
+canvas.addEventListener("mouseup", () => drawing = false);
+canvas.addEventListener("mouseleave", () => drawing = false);
+
+// 지우기 버튼
+document.getElementById("clear").addEventListener("click", () => {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+});
+</script>
+
 </body>
 </html>

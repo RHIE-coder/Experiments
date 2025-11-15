@@ -1,0 +1,63 @@
+# Lazy Getter
+
+Lazy Getter는 데이터가 “딱 한 번만” 로딩되고, 그 이후에는 “절대 갱신되지 않는다.”
+
+즉, 원본 데이터가 바뀌어도 Lazy Getter 내부의 캐시는 업데이트되지 않는다.
+
+→ 최초 로딩 이후에는 값을 변경하지 않는 것이 전제조건이다.
+
+예를 들어:
+ - 설정 값 파일
+ - 상수성 데이터를 DB에서 가져온 값
+ - 계산 결과(빅 데이터 처리, 알고리즘 결과)
+ - 초기화 비용이 큰 객체
+이런 데이터는 시간이 지나도 변하지 않는다는 전제로 lazy-loading 전략을 쓴다.
+
+```java
+public class GetterLazy {
+
+    @Getter(lazy = true)
+    private final Map<String, Long> transactions = getTransactions();
+
+    private Map<String, Long> getTransactions() {
+
+        final Map<String, Long> cache = new HashMap<>();
+        List<String> txnRows = readTxnListFromFile();
+
+        txnRows.forEach(s -> {
+            String[] txnIdValueTuple = s.split(DELIMETER);
+            cache.put(txnIdValueTuple[0], Long.parseLong(txnIdValueTuple[1]));
+        });
+
+        return cache;
+    }
+}
+```
+
+ > Lazy Getter는 “한 번 계산하고 평생 재사용하는” 캐시이다.
+ > 원본 데이터가 바뀌어도 갱신되지 않는다.
+ > 갱신이 필요하면 Lazy Getter 자체를 쓰면 안 된다.
+
+## Before
+
+```java
+private List<String> data;
+
+public List<String> getData() {
+    if (data == null) {
+        System.out.println("비싼 작업 수행 중...");
+        data = loadDataFromDatabase(); // 비용 큼
+    }
+    return data;
+}
+```
+이렇게 하면:
+ - 처음 getData() 호출 → DB에서 읽음
+ - 이후 getData() 호출 → 캐싱된 data 바로 리턴 (매우 빠름)
+
+## After
+
+```java
+@Getter(lazy = true)
+private final List<String> data = loadData();
+```

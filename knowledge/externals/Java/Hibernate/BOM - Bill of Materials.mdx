@@ -1,0 +1,41 @@
+# BOM(Bill of Materials)
+
+:::info
+https://docs.hibernate.org/orm/7.1/quickstart/html_single/
+:::
+
+BOM(Bill of Materials)
+
+BOM은 Bill of Materials(자재 명세서) 의 약자로,
+여러 라이브러리들의 버전을 한 번에 통일시키는 버전 관리 도구다.
+
+## 🔥 1. BOM(Bill of Materials) 개념
+
+라이브러리를 쓸 때 각 모듈의 버전을 개별적으로 지정하지 않아도 되게 만들어 주는 "버전 묶음" 이다.
+
+예를 들어 Hibernate는 여러 모듈로 구성되어 있음:
+
+ - hibernate-core
+ - hibernate-entitymanager
+ - hibernate-envers
+ - hibernate-spatial
+ - hibernate-hikaricp
+ - ...
+
+각각 버전이 다르면 호환 문제가 생기기 쉬움.
+
+그래서 Hibernate 팀이 "이 버전 조합이 안정적으로 돌아간다" 라고 공식 세트를 정의하는데, 이것이 BOM이다.
+
+## 🧩 2. Gradle에서 BOM 적용
+
+```sh
+dependencies {
+  implementation platform("org.hibernate.orm:hibernate-platform:7.1.7.Final")
+
+  // 버전 생략 가능 — BOM이 자동 관리함
+  implementation "org.hibernate.orm:hibernate-core"
+  implementation "jakarta.transaction:jakarta.transaction-api"
+}
+```
+> ❗ implementation platform(...) → 이 줄이 BOM 읽는 부분
+> 이후 Hibernate 관련 라이브러리 버전은 전부 이 BOM 안에 정의된 버전으로 통일된다.

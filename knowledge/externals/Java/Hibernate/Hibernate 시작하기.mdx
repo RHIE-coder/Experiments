@@ -1,0 +1,121 @@
+# Hibernate 시작하기
+
+```sh title="buid.gradle"
+dependencies {
+    testImplementation libs.junit.jupiter
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    implementation libs.guava
+
+    // Hibernate BOM (platform)
+    implementation "org.hibernate.orm:hibernate-core:7.1.7.Final"
+    implementation "jakarta.transaction:jakarta.transaction-api:2.0.1"
+    implementation "jakarta.persistence:jakarta.persistence-api:3.2.0"
+
+    implementation "com.mysql:mysql-connector-j:8.4.0"
+    implementation "net.datafaker:datafaker:2.3.1"
+}
+```
+
+```sh title="hibernate.properties"
+# --- JDBC Connection Settings ---
+hibernate.connection.driver_class=com.mysql.cj.jdbc.Driver
+hibernate.connection.url=jdbc:mysql://localhost:3306/perseus?useSSL=false&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true
+hibernate.connection.username=root
+hibernate.connection.password=1234
+
+# --- Hibernate Dialect (MySQL 8 기준) ---
+hibernate.dialect=org.hibernate.dialect.MySQLDialect
+
+# --- Hibernate Behavior ---
+# 애플리케이션 시작 시 스키마 자동 생성/업데이트
+# create
+# create-drop
+# update
+# validate
+# none
+hibernate.hbm2ddl.auto=update
+
+
+# 콘솔 SQL 출력
+hibernate.show_sql=true
+hibernate.format_sql=true
+hibernate.highlight_sql=true
+
+# JDBC Batch 옵션 (속도 향상)
+hibernate.jdbc.batch_size=20
+
+# Connection Pool (기본 hibernate pool)
+hibernate.connection.pool_size=5
+```
+
+```java title="entity/User.java"
+package com.example.entity;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "users")
+public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name="name")
+    private String name;
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+}
+
+```
+
+```java title="Demo.java"
+package com.example;
+
+import com.example.entity.User;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.boot.Metadata;
+import org.hibernate.boot.MetadataSources;
+import org.hibernate.boot.registry.StandardServiceRegistry;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+
+public class Demo {
+    public static void main(String[] args) {
+        // StandardServiceRegistryBuilder automatically loads hibernate.properties on the classpath.
+        StandardServiceRegistry registry = new StandardServiceRegistryBuilder().build();
+
+        Metadata metadata = new MetadataSources(registry)
+                .addAnnotatedClass(User.class)
+                .buildMetadata();
+
+        try (SessionFactory sessionFactory = metadata.buildSessionFactory();
+             Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+
+            User user = new User();
+            user.setName("Owen");
+            session.persist(user);
+
+            session.getTransaction().commit();
+            System.out.println("hello");
+        }
+    }
+}
+
+```

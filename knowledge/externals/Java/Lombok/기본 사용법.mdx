@@ -1,0 +1,56 @@
+# 기본 사용법
+
+## Before
+
+```java
+@Entity
+public class User implements Serializable {
+
+    private @Id Long id; // will be set when persisting
+
+    private String firstName;
+    private String lastName;
+    private int age;
+
+    public User() {}
+
+    public User(String firstName, String lastName, int age) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.age = age;
+    }
+
+    // getters and setters: ~30 extra lines of code
+}
+```
+
+## After
+
+```java
+@Entity
+@Getter @Setter @NoArgsConstructor // <--- THIS is it
+public class User implements Serializable {
+
+    private @Id Long id; // will be set when persisting
+
+    private String firstName;
+    private String lastName;
+    private int age;
+
+    public User(String firstName, String lastName, int age) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.age = age;
+    }
+}
+```
+
+## 특정 필드만 setter 가시성을 제어하기
+
+```java
+private @Id @Setter(AccessLevel.PROTECTED) Long id;
+```
+ - id 필드에만 setter 가시성을 protected로 제한한다
+ - 즉 외부 객체는 setId()를 사용할 수 없다
+ - 하지만 동일 패키지나 서브클래스에서는 사용할 수 있다
+ - Hibernate/JPA가 내부적으로 reflection 으로 접근하는 데는 문제 없음

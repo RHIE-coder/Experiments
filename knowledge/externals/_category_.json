@@ -1,8 +1,8 @@
 {
-  "label": "Langauges",
+  "label": "Externals",
   "position": 4,
   "link": {
     "type": "generated-index",
-    "description": "프로그래밍 언어 자체(Java, Python, Rust, Go, SQL)"
+    "description": "외부 라이브러리 / 프레임워크 (React, Spring, Django, Express, Flask 등)"
   }
 }

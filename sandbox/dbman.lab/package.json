@@ -1,0 +1,52 @@
+{
+  "name": "perseus",
+  "description": "Database-Centric Design, Implementation, Configuration Management, Monitoring, and Specialized Services.",
+  "private": true,
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rhie-coder/perseus"
+  },
+  "keywords": [
+    "database",
+    "management"
+  ],
+  "author": {
+    "name": "RHIE MINHYUNG",
+    "githubUsername": "rhie-coder",
+    "url": "https://github.com/rhie-coder"
+  },
+  "license": "AGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/rhie-coder/perseus/issues"
+  },
+  "homepage": "https://github.com/rhie-coder/perseus",
+  "devDependencies": {
+    "@nx/jest": "^22.0.3",
+    "@rollup/plugin-commonjs": "^29.0.0",
+    "@rollup/plugin-json": "^6.1.0",
+    "@rollup/plugin-node-resolve": "^16.0.3",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^24.10.1",
+    "@typescript-eslint/eslint-plugin": "^8.46.4",
+    "@typescript-eslint/parser": "^8.46.4",
+    "eslint": "^9.39.1",
+    "eslint-config-prettier": "^10.1.8",
+    "lerna": "^9.0.1",
+    "nodemon": "^3.1.11",
+    "rollup": "^4.53.2",
+    "ts-jest": "^29.4.5",
+    "ts-node": "^10.9.2",
+    "tsc-alias": "^1.8.16",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "^5.9.3"
+  },
+  "workspaces": [
+    "packages/**/*"
+  ],
+  "dependencies": {
+    "reflect-metadata": "^0.2.2"
+  }
+}

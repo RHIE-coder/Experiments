@@ -1,0 +1,18 @@
+# Wrapper 교체하는 방법
+
+:::tip
+자바 버전 마다 맞는 Gradle 버전
+ - https://docs.gradle.org/current/userguide/compatibility.html#java
+:::
+
+ - 25버전 지원
+
+```sh
+gradle wrapper --gradle-version 9.1 --distribution-type=bin
+```
+
+ - 23버전까지 지원
+
+```sh
+gradle wrapper --gradle-version 8.9
+```

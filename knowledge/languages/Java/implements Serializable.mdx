@@ -1,0 +1,80 @@
+# implements Serializable
+
+## 📌 가장 큰 차이: 객체가 JVM 밖으로 이동할 수 있느냐 없느냐
+> ✔ Serializable O (직렬화 가능)
+```java
+public class User implements Serializable {
+    private Long id;
+    private String name;
+}
+```
+이제 가능해짐:
+ - 파일 저장
+ - 디스크에 캐싱
+ - Redis에 저장
+ - Kafka 메시지로 전송
+ - 네트워크를 통해 다른 서버에 통신
+ - 세션 클러스터링(여러 WAS에서 세션 공유)
+
+예:
+```java
+ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("user.obj"));
+oos.writeObject(user);    // OK
+```
+
+> ❌ Serializable X (직렬화 불가능)
+```java
+public class User {
+    private Long id;
+    private String name;
+}
+```
+다음 코드 실행 시 오류:
+
+```sh
+java.io.NotSerializableException: com.example.User
+```
+
+즉, 객체가 JVM 메모리 안에만 존재할 수 있으며, 파일·네트워크·세션 등 외부 저장소로 나갈 수 없다.
+
+## serialVersionUID
+클래스 구조가 변경될 때 버전 충돌을 방지하기 위해 쓰인다.
+
+```java
+private static final long serialVersionUID = 1L;
+```
+실제로는 클래스 호환성을 유지할 것인지 여부를 나타내는 키(Key) 이다.
+
+ - serialVersionUID가 같으면 → 직렬화/역직렬화 가능
+ - serialVersionUID가 다르면 → NotSerializableException 발생
+
+즉, 숫자가 커질수록 새 버전이라는 의미는 전혀 없음.
+
+ - → 대부분의 경우 serialVersionUID는 절대 바꾸지 않는다.
+ - → 변경하면 기존 직렬화된 데이터와 호환이 깨지니까.
+
+Java 표준 라이브러리도 거의 다 serialVersionUID를 10~20년째 그대로 유지 중이다.
+
+### 🔥 serialVersionUID 관리 실전 팁
+#### ✔ 규칙 1: 모든 Serializable 클래스에 1L을 넣어라
+```java
+private static final long serialVersionUID = 1L;
+```
+80% 케이스에서 이게 정석.
+
+#### ✔ 규칙 2: 구조 변경이 있어도 serialVersionUID는 유지하라
+
+호환성을 유지하는 방향이 안전함.
+
+#### ✔ 규칙 3: 정말로 모든 구조가 바뀌고 호환성도 필요 없을 때만 UID 변경
+
+예:
+```java
+private static final long serialVersionUID = 2L;
+```
+
+#### ✔ 규칙 4: 자동 생성(serialver) 기능은 사용하지 마라
+
+> (Java IDE가 자동 계산하는 복잡한 숫자)
+
+→ 클래스 구조가 조금만 바뀌면 UID도 달라져서 호환이 끊기기 때문.
